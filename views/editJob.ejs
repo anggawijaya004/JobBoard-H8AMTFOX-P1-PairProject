@@ -1,0 +1,22 @@
+<%- include ("partials/header.ejs", {title: "Edit JOb"}) %>
+<div id="form">
+    <p><%= error %></p>
+    <form action="/jobs/edit/<%=data.id%>" method="POST">
+        <label >Title</label><br>
+        <input type="text" name="title" value="<%=data.title%>"><br><br>
+        <label>Descriptions</label><br>
+        <input type="text" name="descriptions" value="<%=data.descriptions%>"><br><br>
+        <label>Budget</label><br>
+        <input type="text" name="budget" value="<%=data.budget%>"><br><br>
+        
+        <label>Tag</label><br>
+        <select name="tag">
+        <option default selected >---SELECT---</option>
+        <option value=""></option>
+
+    </select><br>
+        <input type="submit" value="Edit Job">
+    </form>
+</div>
+
+<%- include ("partials/footer.ejs") %>

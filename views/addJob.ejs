@@ -1,0 +1,18 @@
+<%- include ("partials/header.ejs", {title: "Add JOb"}) %>
+<div id="form">
+    <p><%= error %></p>
+    <form action="/jobs/add" method="POST">
+        <label >Title</label><br>
+        <input type="text" name="title" value=""><br><br>
+        <label>Descriptions</label><br>
+        <input type="text" name="descriptions" value=""><br><br>
+        <label>Budget</label><br>
+        <input type="text" name="budget" value=""><br><br>
+        <label >Tag</label><br>
+        <input type="text" name="tag" value="">
+
+        <input type="submit" value="Add Job">
+    </form>
+</div>
+
+<%- include ("partials/footer.ejs") %>

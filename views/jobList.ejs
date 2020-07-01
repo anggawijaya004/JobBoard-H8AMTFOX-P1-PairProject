@@ -1,0 +1,25 @@
+<%- include ("partials/header.ejs", {title: "List Student"}) %>
+    <p><a href = "/students/add">add student</a></p>
+    <div id="table">
+        <table style="width:70%">
+            <tr>
+                <th>Title</th>
+                <th>Descriptions</th>
+                <th>Budget</th>
+                <th>Tag</th>
+                <th>Options</th>
+            </tr>
+
+            <% for(let i=0; i<data.length; i++) { %>
+            <tr>
+                <td><%= data[i].title %></td>
+                <td><%= data[i].descriptions %></td>
+                <td><%= data[i].budget %></td>
+                <td><%= data[i].tag %></td>
+                <td> <a href = "/jobs/join/<%=data[i].id%>/">Join</a></td>
+            </tr>
+
+            <% } %>
+        </table>
+    </div>
+    <%- include ("partials/footer.ejs") %>
