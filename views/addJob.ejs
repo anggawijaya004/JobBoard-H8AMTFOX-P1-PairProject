@@ -1,16 +1,21 @@
-<%- include ("partials/header.ejs", {title: "Add JOb"}) %>
+<%- include ("partials/header.ejs", {title: "Add Job"}) %>
 <div id="form">
-    <p><%= error %></p>
+
     <form action="/jobs/add" method="POST">
-        <label >Title</label><br>
+        <label>Title</label><br>
         <input type="text" name="title" value=""><br><br>
         <label>Descriptions</label><br>
-        <input type="text" name="descriptions" value=""><br><br>
+        <textarea id="descriptions" name="descriptions" rows="5" cols="50"></textarea><br><br>
+        
         <label>Budget</label><br>
         <input type="text" name="budget" value=""><br><br>
-        <label >Tag</label><br>
-        <input type="text" name="tag" value="">
+        <label>Tag</label><br>
 
+        <% for (let i = 0; i < data.length; i++) { %>
+        <input type="checkbox" id="tag" name="tag" value="<%= data[i].id %>">
+        <label for="<%= data[i].id %>"> <%= data[i].name %></label><br>
+        <% } %>
+        <br>
         <input type="submit" value="Add Job">
     </form>
 </div>

@@ -10,12 +10,14 @@
                 <th>Options</th>
             </tr>
 
-            <% for(let i=0; i<data.length; i++) { %>
+            <% for(let i=0; i< data.length; i++) { %>
             <tr>
-                <td><%= data[i].title %></td>
-                <td><%= data[i].descriptions %></td>
-                <td><%= data[i].budget %></td>
-                <td><%= data[i].tag %></td>
+                <td><%= data[i].dataValues.title %></td>
+                <td><%= data[i].dataValues.description %></td>
+                <td><%= data[i].dataValues.budget %></td>
+                <td><% for(let j = 0; j < data[i].dataValues.Tags.length; j++) { %>
+                    <%= data[i].dataValues.Tags[j].dataValues.name %> | 
+                <% } %>  </td>
                 <td> <a href = "/jobs/join/<%=data[i].id%>/">Join</a></td>
             </tr>
 

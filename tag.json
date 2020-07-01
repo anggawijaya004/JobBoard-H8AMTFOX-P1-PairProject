@@ -1,0 +1,32 @@
+[
+    {
+        "name": "full time"
+    },
+    {
+        "name": "part time"
+    },
+    {
+        "name": "contract based"
+    },
+    {
+        "name": "software dev"
+    },
+    {
+        "name": "design & creative"
+    },
+    {
+        "name": "writing"
+    },
+    {
+        "name": "sales"
+    },
+    {
+        "name": "engineering"
+    },
+    {
+        "name": "marketing"
+    },
+    {
+        "name": "others"
+    }
+]
