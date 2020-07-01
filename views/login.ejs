@@ -1,0 +1,14 @@
+<%- include ("partials/header.ejs", {title: "Log In"}) %>
+<div id="form">
+    <p><%= error %></p>
+    <form action="/login" method="POST">
+        <label>Email</label><br>
+        <input type="email" name="email" value=""><br><br>
+        <label>Password</label><br>
+        <input type="password" name="password" value=""><br><br>
+
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+<%- include ("partials/footer.ejs") %>
