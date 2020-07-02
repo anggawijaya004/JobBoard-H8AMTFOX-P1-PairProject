@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 const Controller = require('./controller/index')
 const ControllerUser = require('./controller/user')
 const Sequelize = require('sequelize')
@@ -20,12 +20,18 @@ app.get('/', (req, res) => {
     res.render('home.ejs')
 })
 
-app.get('/jobs/add', Controller.addJobForm)
+app.get('/jobs/add', (req, res, next) => {
+    console.log(req.session.email)
+    if (req.session.isLogin) {
+        next()
+    } else {
+        req.session.error = `Please login to add job, or register if you haven't`
+        res.redirect('/login')
+    }
+}, Controller.addJobForm)
 app.post('/jobs/add', Controller.addJob)
-app.get('/jobs/search', Controller.jobSearch)
-app.get('/jobs/delete/:id', Controller.deleteJob)
-app.get('/jobs/edit/:id', Controller.editJobForm)
-app.get('/jobs', (req, res, next) => {
+app.get('/jobs/search',  Controller.jobSearch)
+app.get('/jobs/delete/:id',(req, res, next) => {
     console.log(req.session.email)
     if (req.session.isLogin) {
         next()
@@ -33,12 +39,32 @@ app.get('/jobs', (req, res, next) => {
         req.session.error = 'Tidak Bisa Masuk, harus login dulu'
         res.redirect('/login')
     }
-}, Controller.jobList)
+}, Controller.deleteJob)
+app.get('/jobs/edit/:id', (req, res, next) => {
+    console.log(req.session.email)
+    if (req.session.isLogin) {
+        next()
+    } else {
+        req.session.error = 'Tidak Bisa Masuk, harus login dulu'
+        res.redirect('/login')
+    }
+}, Controller.editJobForm)
+app.get('/jobs', Controller.jobList)
 
-app.get('/jobs/join/:id', Controller.join)
+app.get('/jobs/join/:id', (req, res, next) => {
+    console.log(req.session.email)
+    if (req.session.isLogin) {
+        next()
+    } else {
+        req.session.error = 'Tidak Bisa Masuk, harus login dulu'
+        res.redirect('/login')
+    }
+}, Controller.join)
 app.get('/jobs/succes', Controller.email)
 
-
+app.get('/user/', (req,res) => {
+    res.send(`Please login to view job posted, or register if you haven't`)
+})
 app.get('/user/:username', Controller.postedJobs)
 app.get('/register', ControllerUser.registerGet)
 app.post('/register', ControllerUser.registerPost)

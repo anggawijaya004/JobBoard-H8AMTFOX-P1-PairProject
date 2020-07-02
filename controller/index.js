@@ -122,7 +122,9 @@ class Controller {
     static postedJobs(req, res) {
         const user = req.session
         const id = req.session.userid
-
+        if (!req.params.username) {
+            res.send(`harap login terleih dahulu!`)
+        }
         Job.findAll({
             include: [
                 { model: Tag }

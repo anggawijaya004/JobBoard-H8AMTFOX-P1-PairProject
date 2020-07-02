@@ -12,8 +12,8 @@ function email(emailTo){
     const mailOptions = {
         from: 'jobs.rmt123@gmail.com',
         to: `${emailTo}`,
-        subject: 'Your Partner Job is Calling',
-        text: 'Congratulation!!! You find your partner/client'
+        subject: 'Job Inquiry',
+        text: 'A user is interested in your job post'
     };
     
     transporter.sendMail(mailOptions, (err, info) => {
