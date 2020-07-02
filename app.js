@@ -29,7 +29,7 @@ app.get('/register', ControllerUser.registerGet)
 app.post('/register', ControllerUser.registerPost)
 app.get('/login', ControllerUser.loginGet)
 app.post('/login', ControllerUser.login)
-
+app.get('/logout', ControllerUser.logout)
 
 
 

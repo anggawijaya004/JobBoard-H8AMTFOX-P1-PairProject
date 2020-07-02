@@ -58,6 +58,12 @@ class ControllerUser {
                 res.send(err)
             })
     }
+
+    static logout(req, res){
+        delete req.app.locals.isLogin
+        res.redirect('/login')
+        
+    }
 }
 
 module.exports = ControllerUser

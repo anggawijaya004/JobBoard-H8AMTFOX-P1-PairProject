@@ -51,10 +51,11 @@ class Controller {
         })
         .then( data => {
            
-            console.log(data[0].dataValues.Tags[0].dataValues.name)
+            // console.log(data[0].dataValues.Tags[0].dataValues.name)
             res.render('jobList.ejs', { data })
         })
         .catch(err => {
+            console.log(err)
             res.send(err)
         })
     }
