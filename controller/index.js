@@ -1,6 +1,7 @@
 const { Job, Tag, User, JobTag } = require('../models')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+const email = require('../helper/email')
 
 class Controller {
 
@@ -135,6 +136,30 @@ class Controller {
                 res.send(err)
             })
     }
+
+    static join(req, res){
+        let emailId = req.params.id
+        let emailTo = ''
+        User.findAll()
+            .then(data =>{
+                for (let i=0; i<data.length; i++){
+                    if (data[i].id == emailId){
+                        emailTo = data[i].email 
+                    }
+                }
+                email(emailTo)
+                res.redirect('/jobs/succes')
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+
+    }
+
+    static email(req, res){
+        res.render('succesJoin')
+    }
+
 
 }
 

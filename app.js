@@ -35,6 +35,9 @@ app.get('/jobs', (req, res, next) => {
     }
 }, Controller.jobList)
 
+app.get('/jobs/join/:id', Controller.join)
+app.get('/jobs/succes', Controller.email)
+
 
 app.get('/user/:username', Controller.postedJobs)
 app.get('/register', ControllerUser.registerGet)
