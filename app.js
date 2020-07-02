@@ -22,11 +22,11 @@ app.get('/', (req, res) => {
 
 app.get('/jobs/add', Controller.addJobForm)
 app.post('/jobs/add', Controller.addJob)
-
+app.get('/jobs/search', Controller.jobSearch)
 app.get('/jobs/delete/:id', Controller.deleteJob)
-
+app.get('/jobs/edit/:id', Controller.editJobForm)
 app.get('/jobs', (req, res, next) => {
-    console.log(req.session)
+    console.log(req.session.email)
     if (req.session.isLogin) {
         next()
     } else {
@@ -35,12 +35,16 @@ app.get('/jobs', (req, res, next) => {
     }
 }, Controller.jobList)
 
+
+app.get('/user/:username', Controller.postedJobs)
 app.get('/register', ControllerUser.registerGet)
 app.post('/register', ControllerUser.registerPost)
 app.get('/login', ControllerUser.loginGet)
 app.post('/login', ControllerUser.login)
 app.get('/logout', ControllerUser.logout)
-app.get('/jobs/search', Controller.jobSearch)
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)

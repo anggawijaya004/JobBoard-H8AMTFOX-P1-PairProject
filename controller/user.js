@@ -1,6 +1,8 @@
 const { User } = require('../models');
 const { compare } = require('../helper/bcrypt');
 
+
+
 class ControllerUser {
     static registerGet(req, res) {
         res.render('register')
@@ -33,14 +35,15 @@ class ControllerUser {
         let { email, password } = req.body
         User.findOne({ where: { email } })
             .then(data => {
-              
+                let cred = data.dataValues
                 if (data) {
-                    console.log(password)
-                    console.log(data.password)
-                    console.log(compare(password, data.password))
+
                     if (compare(password, data.password)) {
                         req.session.isLogin = true
-                        res.redirect('/jobs')
+                        req.session.username = cred.username
+                        req.session.email = cred.email
+                        req.session.userid = cred.id
+                        res.redirect('/')
                     } else {
                         req.session.isLogin = false
                         req.session.error = 'Password salah';
@@ -59,10 +62,28 @@ class ControllerUser {
             })
     }
 
-    static logout(req, res){
+    static logout(req, res) {
         delete req.session.isLogin
         res.redirect('/login')
-        
+
+    }
+
+    static postedJobs(req, res) {
+        //const username = req.params.username
+        const id = req.session.userid
+
+        Job.findAll({
+            include: [
+                { model: Tag }
+            ], where: { user_id: id}
+        })
+            .then(data => {
+                res.render('jobList.ejs', { data })
+            })
+            .catch(err => {
+                console.log(err)
+                res.send(err)
+            })
     }
 }
 

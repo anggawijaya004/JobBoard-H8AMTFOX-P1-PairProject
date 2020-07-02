@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Job.belongsToMany(models.Tag, { through : 'JobTags', foreignKey: 'job_id' })
+      Job.belongsTo(models.User, { foreignKey: 'user_id'})
     }
 
     dolar(){
@@ -23,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
   Job.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
-    budget: DataTypes.INTEGER
+    budget: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Job',

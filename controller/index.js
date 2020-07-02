@@ -15,14 +15,17 @@ class Controller {
     }
 
     static addJob(req, res) {
+        const user = req.session
         const data = req.body
         const addedJob = {
             title: data.title,
             description: data.descriptions,
-            budget: data.budget
+            budget: data.budget,
+            user_id: user.userid
         }
         const tagId = data.tag
-
+        console.log(user)
+        console.log(addedJob)
         Job.create(addedJob)
             .then(jobData => {
                 let jobTagData = []
@@ -47,6 +50,7 @@ class Controller {
     }
 
     static jobList(req, res) {
+        const user = req.session
         Job.findAll({
             include: [
                 { model: Tag }
@@ -54,11 +58,32 @@ class Controller {
         })
             .then(data => {
 
-                // console.log(data[0].dataValues.Tags[0].dataValues.name)
-                res.render('jobList.ejs', { data })
+
+                res.render('jobList.ejs', { data, user })
             })
             .catch(err => {
                 console.log(err)
+                res.send(err)
+            })
+    }
+
+    static editJobForm(req, res) {
+        const id = req.params.id
+        let jobData = null
+        Job.findAll({
+            where: { id: id }
+        })
+       
+            .then(data => {
+                jobData = data[0].dataValues
+                
+                return Tag.findAll()
+            })
+            .then(tagData => {
+                console.log(jobData)
+                res.render('editJob.ejs', { jobData })
+            })
+            .catch(err => {
                 res.send(err)
             })
     }
@@ -75,6 +100,7 @@ class Controller {
     }
 
     static jobSearch(req, res) {
+        const user = req.session
         const { keyword } = req.query;
         console.log(keyword)
         Job.findAll({
@@ -85,12 +111,31 @@ class Controller {
         })
             .then(data => {
                 console.log(data)
-                res.render('jobList.ejs', { data })
+                res.render('jobList.ejs', { data, user })
             })
             .catch(err => {
                 res.send(err)
             })
     }
+
+    static postedJobs(req, res) {
+        const user = req.session
+        const id = req.session.userid
+
+        Job.findAll({
+            include: [
+                { model: Tag }
+            ], where: { user_id: id }
+        })
+            .then(data => {
+                res.render('userPostedJobs.ejs', { data, user })
+            })
+            .catch(err => {
+                console.log(err)
+                res.send(err)
+            })
+    }
+
 }
 
 module.exports = Controller
