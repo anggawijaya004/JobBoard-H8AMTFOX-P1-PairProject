@@ -3,6 +3,8 @@ const app = express()
 const PORT = 3000
 const Controller = require('./controller/index')
 const ControllerUser = require('./controller/user')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
@@ -13,7 +15,7 @@ app.get('/', (req,res) => {
 
 app.get('/jobs/add', Controller.addJobForm)
 app.post('/jobs/add', Controller.addJob)
-//app.get('/jobs', Controller.jobList)
+
 app.get('/jobs/delete/:id', Controller.deleteJob)
 
 app.get('/jobs', (req, res, next) =>{
@@ -30,14 +32,7 @@ app.post('/register', ControllerUser.registerPost)
 app.get('/login', ControllerUser.loginGet)
 app.post('/login', ControllerUser.login)
 app.get('/logout', ControllerUser.logout)
-
-
-
-
-
-
-
-
+app.get('/jobs/search', Controller.jobSearch)
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)

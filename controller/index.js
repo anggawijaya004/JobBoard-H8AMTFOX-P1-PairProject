@@ -1,4 +1,6 @@
 const { Job, Tag, User, JobTag } = require('../models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 class Controller {
 
@@ -25,18 +27,18 @@ class Controller {
             .then(jobData => {
                 let jobTagData = []
                 for (let i = 0; i < tagId.length; i++) {
-                   let obj = {
-                       job_id: `${jobData.id}`, tag_id: `${tagId[i]}`
-                   }
-                   jobTagData.push(obj)
+                    let obj = {
+                        job_id: `${jobData.id}`, tag_id: `${tagId[i]}`
+                    }
+                    jobTagData.push(obj)
                 }
                 JobTag.bulkCreate(jobTagData)
-                .then(() => {
-                    res.redirect('/jobs/')
-                })
-                .catch(err => {
-                    res.send(err)
-                })
+                    .then(() => {
+                        res.redirect('/jobs/')
+                    })
+                    .catch(err => {
+                        res.send(err)
+                    })
             })
             .catch(err => {
                 console.log(err)
@@ -44,32 +46,50 @@ class Controller {
             })
     }
 
-    static jobList(req,res) {
+    static jobList(req, res) {
         Job.findAll({
             include: [
-                {model: Tag }
+                { model: Tag }
             ]
         })
-        .then( data => {
-           
-            // console.log(data[0].dataValues.Tags[0].dataValues.name)
-            res.render('jobList.ejs', { data })
-        })
-        .catch(err => {
-            console.log(err)
-            res.send(err)
-        })
+            .then(data => {
+
+                // console.log(data[0].dataValues.Tags[0].dataValues.name)
+                res.render('jobList.ejs', { data })
+            })
+            .catch(err => {
+                console.log(err)
+                res.send(err)
+            })
     }
 
-    static deleteJob(req,res) {
+    static deleteJob(req, res) {
         const id = req.params.id
-        Job.destroy( { where: { id: id } })
-        .then(() => {
-            res.redirect('/jobs')
+        Job.destroy({ where: { id: id } })
+            .then(() => {
+                res.redirect('/jobs')
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    }
+
+    static jobSearch(req, res) {
+        const { keyword } = req.query;
+        console.log(keyword)
+        Job.findAll({
+            include: [
+                { model: Tag }
+            ],
+            where: { title: { [Op.like]: '%' + keyword + '%' } }
         })
-        .catch(err => {
-            res.send(err)
-        })
+            .then(data => {
+                console.log(data)
+                res.render('jobList.ejs', { data })
+            })
+            .catch(err => {
+                res.send(err)
+            })
     }
 }
 
