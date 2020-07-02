@@ -24,8 +24,8 @@ class ControllerUser {
     }
 
     static loginGet(req, res) {
-        const error = req.app.locals.error;
-        delete req.app.locals.error
+        const error = req.session.error;
+        delete req.session.error
         res.render('login', { error })
     }
 
@@ -39,17 +39,17 @@ class ControllerUser {
                     console.log(data.password)
                     console.log(compare(password, data.password))
                     if (compare(password, data.password)) {
-                        req.app.locals.isLogin = true
+                        req.session.isLogin = true
                         res.redirect('/jobs')
                     } else {
-                        req.app.locals.isLogin = false
-                        req.app.locals.error = 'Password salah';
+                        req.session.isLogin = false
+                        req.session.error = 'Password salah';
                         res.redirect('/login')
                     }
 
                 } else {
-                    req.app.locals.isLogin = false
-                    req.app.locals.error = 'Email atau Password salah';
+                    req.session.isLogin = false
+                    req.session.error = 'Email atau Password salah';
                     res.redirect('/login')
                 }
 
@@ -60,7 +60,7 @@ class ControllerUser {
     }
 
     static logout(req, res){
-        delete req.app.locals.isLogin
+        delete req.session.isLogin
         res.redirect('/login')
         
     }

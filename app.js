@@ -5,11 +5,18 @@ const Controller = require('./controller/index')
 const ControllerUser = require('./controller/user')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+const session = require('express-session')
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/', (req,res) => {
+app.use(session({
+    secret: 'keyboarjhkouyt',
+    resave: false,
+    saveUninitialized: false
+}))
+
+app.get('/', (req, res) => {
     res.render('home.ejs')
 })
 
@@ -18,11 +25,12 @@ app.post('/jobs/add', Controller.addJob)
 
 app.get('/jobs/delete/:id', Controller.deleteJob)
 
-app.get('/jobs', (req, res, next) =>{
-    if (req.app.locals.isLogin){
+app.get('/jobs', (req, res, next) => {
+    console.log(req.session)
+    if (req.session.isLogin) {
         next()
-    }else{
-        req.app.locals.error = 'Tidak Bisa Masuk, harus login dulu'
+    } else {
+        req.session.error = 'Tidak Bisa Masuk, harus login dulu'
         res.redirect('/login')
     }
 }, Controller.jobList)
