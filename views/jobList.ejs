@@ -1,5 +1,5 @@
 <%- include ("partials/header.ejs", {title: "List Student"}) %>
-    <p><a href = "/students/add">add student</a></p>
+    <p><a href = "/jobs/add">add job</a></p>
     <div id="table">
         <table style="width:70%">
             <tr>
@@ -8,8 +8,8 @@
                 <th>Budget</th>
                 <th>Tag</th>
                 <th>Options</th>
+                <th>Actions</th>
             </tr>
-
             <% for(let i=0; i< data.length; i++) { %>
             <tr>
                 <td><%= data[i].dataValues.title %></td>
@@ -18,7 +18,8 @@
                 <td><% for(let j = 0; j < data[i].dataValues.Tags.length; j++) { %>
                     <%= data[i].dataValues.Tags[j].dataValues.name %> | 
                 <% } %>  </td>
-                <td> <a href = "/jobs/join/<%=data[i].id%>/">Join</a></td>
+                <td> <a href = "/jobs/join/<%= data[i].dataValues.id %>/">Join</a></td>
+                <td><a href = "/jobs/delete/<%= data[i].dataValues.id %>/">Delete</a></td>
             </tr>
 
             <% } %>

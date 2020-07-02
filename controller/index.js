@@ -32,7 +32,7 @@ class Controller {
                 }
                 JobTag.bulkCreate(jobTagData)
                 .then(() => {
-                    res.redirect('/jobs/add/')
+                    res.redirect('/jobs/')
                 })
                 .catch(err => {
                     res.send(err)
@@ -50,10 +50,20 @@ class Controller {
             ]
         })
         .then( data => {
-            //console.log(data[0].dataValues.id, data[0].dataValues.title, data[0].dataValues.description, data[0].dataValues.budget)
-            //console.log(data[0].dataValues.Tags[0], '==================')
+           
             console.log(data[0].dataValues.Tags[0].dataValues.name)
             res.render('jobList.ejs', { data })
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    }
+
+    static deleteJob(req,res) {
+        const id = req.params.id
+        Job.destroy( { where: { id: id } })
+        .then(() => {
+            res.redirect('/jobs')
         })
         .catch(err => {
             res.send(err)
