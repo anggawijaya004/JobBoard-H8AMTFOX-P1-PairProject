@@ -14,7 +14,7 @@
             <tr>
                 <td><%= data[i].dataValues.title %></td>
                 <td><%= data[i].dataValues.description %></td>
-                <td><%= data[i].dataValues.budget %></td>
+                <td><%= data[i].dolar() %></td>
                 <td><% for(let j = 0; j < data[i].dataValues.Tags.length; j++) { %>
                     <%= data[i].dataValues.Tags[j].dataValues.name %> | 
                 <% } %>  </td>

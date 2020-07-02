@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Job.belongsToMany(models.Tag, { through : 'JobTags', foreignKey: 'job_id' })
     }
+
+    dolar(){
+      let dolar = `$ ${this.budget}`
+      return dolar
+    }
+    
   };
   Job.init({
     title: DataTypes.STRING,
