@@ -49,6 +49,7 @@ app.get('/jobs/edit/:id', (req, res, next) => {
         res.redirect('/login')
     }
 }, Controller.editJobForm)
+app.post('/jobs/edit/:id', Controller.editJob)
 app.get('/jobs', Controller.jobList)
 
 app.get('/jobs/join/:id', (req, res, next) => {
@@ -60,6 +61,8 @@ app.get('/jobs/join/:id', (req, res, next) => {
         res.redirect('/login')
     }
 }, Controller.join)
+
+
 app.get('/jobs/succes', Controller.email)
 
 app.get('/user/', (req,res) => {

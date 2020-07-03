@@ -162,6 +162,26 @@ class Controller {
         res.render('succesJoin')
     }
 
+    static editJob(req,res) {
+        const id = req.params.id
+        const data = req.body
+
+        const editedJob = {
+            title: data.title,
+            description: data.descriptions,
+            budget: data.budget
+        }
+       
+        
+         Job.update(editedJob, { where: { id: id } })
+            .then(() => {
+                res.redirect('/')
+            })
+            .catch(error => {
+                res.send(error)
+            }) 
+    }
+
 
 }
 

@@ -1,7 +1,7 @@
 <%- include ("partials/header.ejs", {title: "EDIT JOB"}) %>
 <div id="form">
 
-    <form action="/jobs/add" method="POST">
+    <form action="/jobs/edit/<%= jobData.id %>" method="POST">
         <label>Title</label><br>
         <input type="text" name="title" value="<%= jobData.title %>"><br><br>
         <label>Descriptions</label><br>
